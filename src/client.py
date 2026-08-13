@@ -6,7 +6,7 @@ class Client:
         self.country = country
         self.signup_date = signup_date
 
-    #Aqui creo el método para convertir el objeto a un diccionario
+    #Aqui creo el método requerido para convertir el objeto a un diccionario
     def to_dict(self):
         return {
             "client_id": self.client_id,
