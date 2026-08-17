@@ -1,6 +1,6 @@
-from client import Client
+from src.client import Client
 
-class Client_collection:
+class ClientCollection:
     def __init__(self, clients: list[Client]):
         self.clients = clients
 
