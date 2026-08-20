@@ -63,6 +63,6 @@ def generate_report():
 
     return report
 
-print("--- Probando nuestro primer cálculo ---")
+print("--- Probando el primer y segundo cálculo ---")
 resultado = generate_report()
 print(resultado)
