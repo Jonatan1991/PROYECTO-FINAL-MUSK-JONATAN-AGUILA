@@ -33,8 +33,14 @@ class SalesCollection:
         for sale in self.sales:
             if sale.client_id == client_id:
                 total += sale.amount
-                contador =+ 1
+                contador += 1
 
         return total / contador
-
     
+    # Agrego esa funcion para poder sacar lka suma del total de las ventas
+    def total_revenue(self):
+        total = 0
+        for sale in self.sales:
+            total += sale.amount
+
+        return total

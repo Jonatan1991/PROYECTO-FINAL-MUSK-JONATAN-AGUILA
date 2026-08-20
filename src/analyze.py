@@ -37,6 +37,8 @@ def generate_report():
     sales_objects = []
     sales_df = pd.read_csv(ruta_sales)
 
+    
+
     for col, row in sales_df.iterrows():
         sale = Sale(
             sale_id=row['sale_id'],
@@ -53,12 +55,42 @@ def generate_report():
     # Segundo cálculo
     total_ventas = len(sales_collection.sales)
 
+    total_revenue = sales_collection.total_revenue()
+
+    clients_list = []
+    for client in collection_client.clients:
+         # 3) Total gastado por cliente
+        total_spent = sales_collection.total_amount_by_client(client.client_id)
+        
+        # 4) Cantidad de ventas por cliente
+        sales_by_c = sales_collection.sales_by_client(client.client_id)
+        sale_count = len(sales_by_c)
+        
+        # 5) Promedio de gasto por este cliente (redondeado a 2 decimales)
+        average_sale = 0.0
+        if sale_count > 0:
+            average_sale = round(sales_collection.average_sale_by_client(client.client_id), 2)
+
+        # Agregamos la información en el formato esperado por los tests
+        clients_list.append({
+            "client_id": client.client_id,
+            "name": client.name,
+            "country": client.country,
+            "signup_date": client.signup_date,
+            "total_spent": total_spent,
+            "sale_count": sale_count,
+            "average_sale": average_sale
+        })
+
+
+    
     report = {
         "summary": {
             "total_clients": total_clientes,
-            "total_sales": total_ventas,        # De momento en 0, lo calcularás en el siguiente paso
-            "total_revenue": 0.0
-        }
+            "total_sales": total_ventas,
+            "total_revenue": total_revenue
+        }, 
+        "clients": clients_list
     }
 
     return report
