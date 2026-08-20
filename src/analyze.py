@@ -55,6 +55,7 @@ def generate_report():
     # Segundo cálculo
     total_ventas = len(sales_collection.sales)
 
+    # suba de todas las ventas
     total_revenue = round(sales_collection.total_revenue(), 2)
 
     clients_list = []
