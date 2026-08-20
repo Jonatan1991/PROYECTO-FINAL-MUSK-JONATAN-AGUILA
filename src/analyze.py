@@ -55,7 +55,7 @@ def generate_report():
     # Segundo cálculo
     total_ventas = len(sales_collection.sales)
 
-    total_revenue = sales_collection.total_revenue()
+    total_revenue = round(sales_collection.total_revenue(), 2)
 
     clients_list = []
     for client in collection_client.clients:
