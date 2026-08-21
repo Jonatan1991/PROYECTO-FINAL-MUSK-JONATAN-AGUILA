@@ -99,7 +99,11 @@ def generate_report():
             top_client_by_country[pais] = nombre
 
     # 7mo cálculo -> Total de ventas por categoría
-    ventas_categoria = sales_df.groupby('category')['amount'].sum().to_dict()
+    #primero agrupo por categoria, luego que sume la columna amount separadas por categoria y luego lo convierto a un diccionario
+    total_ventas_categoria = sales_df.groupby('category')['amount'].sum().to_dict()
+
+    # 8vo cálculo -> Cliente con más ventas en una categoría específica
+    
 
     report = {
         "summary": {
@@ -109,7 +113,7 @@ def generate_report():
         }, 
         "clients": clients_list,
         "top_client_by_country": top_client_by_country,
-        "sales_by_category": ventas_categoria,
+        "sales_by_category": total_ventas_categoria,
         
     }
 
