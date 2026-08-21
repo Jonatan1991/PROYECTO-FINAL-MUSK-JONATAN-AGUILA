@@ -83,15 +83,29 @@ def generate_report():
             "average_sale": average_sale
         })
 
+    # Calculo numero 6
+    # Creo 2 disccionarios uno para el pais y el gasto para buscar cual es el myor y el otro para agrupar el cliente y el pais
+    top_client_by_country = {}
+    max_spent_by_country = {}
+    # Luego recorro la lista de cklientes creada anteriormente
+    for client in clients_list:
+        #creo las variables que me hacne flata, pais, nombre y gasto para luego usarlas
+        pais = client["country"]
+        nombre = client["name"]
+        gasto = client["total_spent"]
+        # aqui creo la condicion que me permite saber cual es el gasto mayor para agregarlos al diccionario por orden
+        if pais not in max_spent_by_country or gasto > max_spent_by_country[pais]:
+            max_spent_by_country[pais] = gasto
+            top_client_by_country[pais] = nombre
 
-    
     report = {
         "summary": {
             "total_clients": total_clientes,
             "total_sales": total_ventas,
             "total_revenue": total_revenue
         }, 
-        "clients": clients_list
+        "clients": clients_list,
+        "top_client_by_country": top_client_by_country
     }
 
     return report
