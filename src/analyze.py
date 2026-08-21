@@ -52,10 +52,10 @@ def generate_report():
 
     sales_collection = SalesCollection(sales_objects)
 
-    # Segundo cálculo
+    # 2do cálculo
     total_ventas = len(sales_collection.sales)
 
-    # suba de todas las ventas
+    # 3) Sumaa de todas las ventas
     total_revenue = round(sales_collection.total_revenue(), 2)
 
     clients_list = []
@@ -84,7 +84,7 @@ def generate_report():
         })
 
     # Calculo numero 6
-    # Creo 2 disccionarios uno para el pais y el gasto para buscar cual es el myor y el otro para agrupar el cliente y el pais
+    # Creo 2 diccionarios uno para el pais y el gasto para buscar cual es el myor y el otro para agrupar el cliente y el pais
     top_client_by_country = {}
     max_spent_by_country = {}
     # Luego recorro la lista de cklientes creada anteriormente
@@ -98,6 +98,9 @@ def generate_report():
             max_spent_by_country[pais] = gasto
             top_client_by_country[pais] = nombre
 
+    # 7mo cálculo -> Total de ventas por categoría
+    ventas_categoria = sales_df.groupby('category')['amount'].sum().to_dict()
+
     report = {
         "summary": {
             "total_clients": total_clientes,
@@ -105,7 +108,9 @@ def generate_report():
             "total_revenue": total_revenue
         }, 
         "clients": clients_list,
-        "top_client_by_country": top_client_by_country
+        "top_client_by_country": top_client_by_country,
+        "sales_by_category": ventas_categoria,
+        
     }
 
     return report
