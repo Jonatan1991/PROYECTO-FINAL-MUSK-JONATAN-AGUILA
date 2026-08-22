@@ -121,7 +121,7 @@ def generate_report():
     clients_list.sort(key=contar_ventas_electronica, reverse=True)
     cliente_max_venta = clients_list[0]["name"]
 
-    
+    # 9no Calculo Número de clientes que superan un gasto mínimo
 
     report = {
         "summary": {
