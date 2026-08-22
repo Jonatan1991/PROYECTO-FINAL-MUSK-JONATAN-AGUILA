@@ -122,6 +122,12 @@ def generate_report():
     cliente_max_venta = clients_list[0]["name"]
 
     # 9no Calculo Número de clientes que superan un gasto mínimo
+    minimo = 500
+    high_spending_clients = []
+    for client in clients_list:
+        if client["total_spent"] > minimo:
+            high_spending_clients.append(client["name"])
+    
 
     report = {
         "summary": {
@@ -132,6 +138,7 @@ def generate_report():
         "clients": clients_list,
         "top_client_by_country": top_client_by_country,
         "sales_by_category": total_ventas_categoria,
+        "high_spending_clients": high_spending_clients
         # "top_client_electronics": cliente_max_venta
     }
 
