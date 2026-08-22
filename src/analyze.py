@@ -3,9 +3,9 @@ import pandas as pd
 
 from src.client import Client
 from src.client_collection import ClientCollection
-
 from src.sale import Sale
 from src.sales_collection import SalesCollection
+from src.functional_utils import filter_sales_by_category
 
 def generate_report():
 
@@ -102,7 +102,25 @@ def generate_report():
     #primero agrupo por categoria, luego que sume la columna amount separadas por categoria y luego lo convierto a un diccionario
     total_ventas_categoria = sales_df.groupby('category')['amount'].sum().to_dict()
 
-    # 8vo cálculo -> Cliente con más ventas en una categoría específica
+    # 8vo cálculo -> Cliente con más ventas en una categoría específica (Electronics)
+    # 1. Filtro por categoría (función pura)
+    electronics_sales = filter_sales_by_category(sales_collection.sales, "Electronics")
+
+    # 2. Definimos una función auxiliar para filtrar por cliente y contar sus ventas en esta categoría
+    def contar_ventas_electronica(client_dict):
+        c_id = client_dict["client_id"]
+        # Filtrado por cliente (usando un bucle for tradicional)
+        sales_client = []
+        for sale in electronics_sales:
+            if sale.client_id == c_id:
+                sales_client.append(sale)
+        # Contar ventas
+        return len(sales_client)
+
+    # 3. Devolver el cliente con máximo: ordenamos la lista de clientes descendientemente según este conteo
+    clients_list.sort(key=contar_ventas_electronica, reverse=True)
+    cliente_max_venta = clients_list[0]["name"]
+
     
 
     report = {
@@ -114,7 +132,7 @@ def generate_report():
         "clients": clients_list,
         "top_client_by_country": top_client_by_country,
         "sales_by_category": total_ventas_categoria,
-        
+        # "top_client_electronics": cliente_max_venta
     }
 
     return report
